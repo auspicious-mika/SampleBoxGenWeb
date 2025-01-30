@@ -46,50 +46,57 @@ def sample_box_creator(cover_file_path, direction, panning, top_font_ttf, top_fo
         draw.polygon([(759.9+radius, mid), (759.9, 193), (759.9, 632.9)], fill="#aaaaaa")
 
     # calculate image
-    if direction <= -90:
-        draw.rectangle(rect_shape, fill = "#ffb4b4")
-    elif direction <= -80:
-        draw.rectangle(rect_shape, fill = "#ff8f9b")
-    elif direction <= -70:
-        draw.rectangle(rect_shape, fill = "#ff688d")
-    elif direction <= -60:
-        draw.rectangle(rect_shape, fill = "#f7438f")
-    elif direction <= -50:
-        draw.rectangle(rect_shape, fill = "#cb3095")
-    elif direction <= -40:
-        draw.rectangle(rect_shape, fill = "#9f1c9b")
-    elif direction <= -30:
-        draw.rectangle(rect_shape, fill = "#a339d1")
-    elif direction <= -20:
-        draw.rectangle(rect_shape, fill = "#a459ff")
-    elif direction <= -10:
-        draw.rectangle(rect_shape, fill = "#a481ff")
-    elif direction <= -3:
-        draw.rectangle(rect_shape, fill = "#b0a4ff")
-    elif direction <= 2:
-        draw.rectangle(rect_shape, fill = "#c4c2ff")
-    elif direction <= 9:
-        draw.rectangle(rect_shape, fill = "#99b0ff")
-    elif direction <= 19:
-        draw.rectangle(rect_shape, fill = "#50b1e5")
-    elif direction <= 29:
-        draw.rectangle(rect_shape, fill = "#1eb480")
-    elif direction <= 39:
-        draw.rectangle(rect_shape, fill = "#00c950")
-    elif direction <= 49:
-        draw.rectangle(rect_shape, fill = "#008a00")
-    elif direction <= 59:
-        draw.rectangle(rect_shape, fill = "#20a300")
-    elif direction <= 69:
-        draw.rectangle(rect_shape, fill = "#49b700")
-    elif direction <= 79:
-        draw.rectangle(rect_shape, fill = "#77c700")
-    elif direction <= 89:
-        draw.rectangle(rect_shape, fill = "#77c700")
-    elif direction <= 100:
-        draw.rectangle(rect_shape, fill = "#e4e400")
-    elif direction == 101:
-        draw.rectangle(rect_shape, fill = "#ffffff")
+    if not chk_color:
+        if direction <= -90:
+            draw.rectangle(rect_shape, fill = "#ffb4b4")
+        elif direction <= -80:
+            draw.rectangle(rect_shape, fill = "#ff8f9b")
+        elif direction <= -70:
+            draw.rectangle(rect_shape, fill = "#ff688d")
+        elif direction <= -60:
+            draw.rectangle(rect_shape, fill = "#f7438f")
+        elif direction <= -50:
+            draw.rectangle(rect_shape, fill = "#cb3095")
+        elif direction <= -40:
+            draw.rectangle(rect_shape, fill = "#9f1c9b")
+        elif direction <= -30:
+            draw.rectangle(rect_shape, fill = "#a339d1")
+        elif direction <= -20:
+            draw.rectangle(rect_shape, fill = "#a459ff")
+        elif direction <= -10:
+            draw.rectangle(rect_shape, fill = "#a481ff")
+        elif direction <= -3:
+            draw.rectangle(rect_shape, fill = "#b0a4ff")
+        elif direction <= 2:
+            draw.rectangle(rect_shape, fill = "#c4c2ff")
+        elif direction <= 9:
+            draw.rectangle(rect_shape, fill = "#99b0ff")
+        elif direction <= 19:
+            draw.rectangle(rect_shape, fill = "#50b1e5")
+        elif direction <= 29:
+            draw.rectangle(rect_shape, fill = "#1eb480")
+        elif direction <= 39:
+            draw.rectangle(rect_shape, fill = "#00c950")
+        elif direction <= 49:
+            draw.rectangle(rect_shape, fill = "#008a00")
+        elif direction <= 59:
+            draw.rectangle(rect_shape, fill = "#20a300")
+        elif direction <= 69:
+            draw.rectangle(rect_shape, fill = "#49b700")
+        elif direction <= 79:
+            draw.rectangle(rect_shape, fill = "#77c700")
+        elif direction <= 89:
+            draw.rectangle(rect_shape, fill = "#77c700")
+        elif direction <= 100:
+            draw.rectangle(rect_shape, fill = "#e4e400")
+        elif direction == 101:
+            draw.rectangle(rect_shape, fill = "#ffffff")
+    else:
+        draw.rectangle(rect_shape, fill=color)
+
+    # circle
+    if chk_circle:
+        draw.ellipse((753.95 - 30, 193 - 30, 753.95 + 30, 193 + 30), circle)
 
     # draw cover
     main_img.paste(cover_img, (333, 205))
@@ -134,7 +141,11 @@ st.title("F8's Sample Box Generator")
 
 file = st.file_uploader("Open Cover File", accept_multiple_files=False, type=["png", "jpg", "jpeg"])
 direc = st.number_input("Direction (can go from -100 as 100% left to 100 as 100% right, and 101 = white border)", min_value=-100, max_value=101, value=0, step=1)
+chk_color = st.checkbox("Custom color outline?")
+color = st.color_picker("(Custom Color)", "#ffffff")
 panning = st.number_input("Panning (0 for none, 1 for hard panning, 2 for soft panning, 3 for sawtooth panning).", min_value=0, max_value=3, value=0, step=1)
+chk_circle = st.checkbox("Circle in upper right?")
+circle = st.color_picker("(Color of Circle)", "#ffffff")
 tfttf = st.file_uploader("Open Top font TTF", accept_multiple_files=False, type=["ttf"])
 bfttf = st.file_uploader("Open Bottom font TTF", accept_multiple_files=False, type=["ttf"])
 tfs = st.number_input("Top font size", min_value=1, max_value=200, value=53, step=1)
