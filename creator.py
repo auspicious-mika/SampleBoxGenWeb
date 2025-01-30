@@ -95,8 +95,6 @@ def sample_box_creator(cover_file_path, direction, panning, top_font_ttf, top_fo
         draw.rectangle(rect_shape, fill=color)
 
     # circle
-    if chk_circle:
-        draw.ellipse((753.95 - 30, 193 - 30, 753.95 + 30, 193 + 30), circle)
 
     # draw cover
     main_img.paste(cover_img, (333, 205))
@@ -134,6 +132,9 @@ def sample_box_creator(cover_file_path, direction, panning, top_font_ttf, top_fo
         draw.text(position, bottom_texts[i], font=bottom_font, fill=(255,255,255))
         y_val += (bottom_font_px)
 
+    if chk_circle:
+        draw.ellipse((753.95 - 30, 193 - 30, 753.95 + 30, 193 + 30), circle)
+        
     main_img.save(f"{top_texts[0]}.png")
     return main_img
 
