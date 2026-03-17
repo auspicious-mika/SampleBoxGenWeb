@@ -135,10 +135,10 @@ def sample_box_creator(cover_file_path, direction, panning, top_font_ttf, top_fo
     if chk_circle:
         draw.ellipse((753.95 - 30, 193 - 30, 753.95 + 30, 193 + 30), circle)
         
-    main_img.save(f"{top_texts[0]}.png")
+    main_img.save(f"{top_texts[0].replace('/','_')}.png")
     return main_img
 
-st.title("F8's Sample Box Generator")
+st.title("mika's Sample Box Generator")
 
 file = st.file_uploader("Open Cover File", accept_multiple_files=False, type=["png", "jpg", "jpeg"])
 direc = st.number_input("Direction (can go from -100 as 100% left to 100 as 100% right, and 101 = white border)", min_value=-100, max_value=101, value=0, step=1)
@@ -157,8 +157,13 @@ tranback = st.checkbox("Transparent background?")
 
 try:
     st.image(sample_box_creator(file, direc, panning, tfttf, tfs, bfttf, bfs, tts, bts, tranback))
-    save_image_Filename = "{}.png".format(tts.split("\n")[0])
+    save_image_Filename = "{}.png".format(tts.split("\n")[0].replace('/','_'))
     with open(save_image_Filename, "rb") as f:
         st.download_button(label="Download Image!", data=f, file_name=save_image_Filename, mime="image/png")
-except:
+except AttributeError:
     st.markdown("## Fill out ALL inputs, then check back here.")
+except ValueError:
+    st.markdown("## Fill out ALL inputs, then check back here.")
+except Exception as e:
+    st.markdown("## A super secret UNKNOWN error has occurred! If this persists, dm mika with the error message!")
+    st.markdown(f"{e}")
